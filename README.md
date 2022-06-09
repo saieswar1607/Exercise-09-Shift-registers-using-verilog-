@@ -46,34 +46,78 @@ A Parallel in Parallel out (PIPO) shift register is used as a temporary storage 
 
 
 ### PROGRAM 
+```
 /*
 Program for  Implementation-of Shift-registers-using-verilog-
-Developed by: 
-RegisterNumber:  
+Developed by: Sai Eswar Kandukuri
+RegisterNumber:  212221240020
 */
 
+SIPO
 
+module sipo(si,clk,po);
+input si,clk;
+output [0:7]po;
+reg [0:7]temp;
+always@(posedge clk)
+begin
+temp = {temp[0:6],si};
+end
+assign po=temp;
+endmodule
 
+PISO
 
+module sipo(Clk, Parallel_In,load, Serial_Out);
+input Clk,load;
+input [3:0]Parallel_In;
+output reg Serial_Out;
+reg [3:0]tmp;
+always @(posedge Clk)
+begin
+if(load)
+tmp<=Parallel_In;
+else
+begin
+Serial_Out<=tmp[3];
+tmp<={tmp[2:0],1'b0};
+end
+end
+endmodule
 
+PIPO
 
+module sipo(pi,clk,po);
+input clk;
+input[3:0]pi;
+output reg[3:0]po;
+always@(posedge clk)
+begin
+po = pi;
+end 
+endmodule
+```
 ### RTL LOGIC  REGISTERS   
 
+#### SIPO
+![1](https://user-images.githubusercontent.com/93427011/172902838-3376ab2d-e45d-4d39-a956-3e8ab3777f8c.png)
 
+#### PISO
+![2](https://user-images.githubusercontent.com/93427011/172902901-64ecde24-56b5-4dc3-96c0-717702c511ca.png)
 
-
-
-
-
-
+#### PIPO
+![3](https://user-images.githubusercontent.com/93427011/172902949-df290934-5574-4668-b78e-458d789d04d4.png)
 
 ### TIMING DIGRAMS FOR SHIFT REGISTERS
 
+#### SIPO
+<img width="830" alt="sipot" src="https://user-images.githubusercontent.com/93427011/172903033-cff707d2-102f-4626-846a-6ffc84fd9b84.png">
 
+#### PISO
+<img width="829" alt="pisot" src="https://user-images.githubusercontent.com/93427011/172903080-671c4afe-4836-4cd7-aed3-7ff621e69322.png">
 
-
-
-
-
+#### PIPO
+<img width="830" alt="pipot" src="https://user-images.githubusercontent.com/93427011/172903127-c2fba3e6-d19a-4740-a1e3-e037e32572d4.png">
 
 ### RESULTS 
+Therefore PISO,PIPO,PISO are implemented succesfully using verilog and validated their functionality using their functional tables.
